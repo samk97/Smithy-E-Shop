@@ -38,13 +38,19 @@
 
             <div id="menu-bar" class="fas fa-bars"></div>
 
-            <nav class="navbar">
-                {% comment %} <a href="{% url 'shop:index'%}">home</a> {% endcomment %}
-                <a href="#category">category</a>
+            <ul class="navbar" style="list-style-type:none;">
+
+                {%url 'home' as url %}
+                <li class="{% if request.path == url %} active {% endif %}"><a  href="{{url}}">home</a></li>
+                {%url 'tools' as url %}
+                <li class="{% if request.path == url %} active {% endif %}"><a href="{{url}}">tools</a></li>
+                <li><a href="#contact">Agriculture</a></li>
+                <li><a href="#contact">Weapones</a></li>
+                <li><a href="#contact">Utensils</a></li>
+                {% comment %} <a href="#category">category</a>
                 <a href="#product">product</a>
-                <a href="#contact">contact</a>
-                
-            </nav>
+                <a href="#contact">contact</a> {% endcomment %}
+            </ul>
 
             <div class="icons">
                 
@@ -111,7 +117,7 @@
                             </div>
 
                             <div class="input-field button">
-                                <input type="button" value="Login Now">
+                                <input type="submit" value="Login Now">
                             </div>
 
                             <div class="login-signup">

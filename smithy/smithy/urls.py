@@ -19,5 +19,8 @@ from smithy import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.homePage),
+    path('',views.homePage,name='home'),
+    path('tools/',views.tools,name='tools'),
+    path('login/',views.login,name='login'),
+    path('signup/',views.signup,name='signup'),
 ]

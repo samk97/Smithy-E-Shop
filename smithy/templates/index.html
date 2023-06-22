@@ -1,7 +1,9 @@
-
-{% include 'header.html' %}
-{% load static %}
+{% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
+
+
 <section class="home" id="home">
 
     <div class="image">
@@ -52,7 +54,7 @@
             <h3>Tools</h3>
             <p>upto 50% off</p>
             <img src="images/tools/Hammer.png" alt="">
-            {% comment %} <a href="{% url 'templattools' %}" class="btn">shop now</a> {% endcomment %}
+            <a href="{% url 'tools' %}" class="btn">shop now</a>
         </div>
         <div class="box">
             <h3>Agriculture</h3>
@@ -245,4 +247,4 @@
     </form>
 
 </section>
-{% endblock %}
+{% endblock content %}
