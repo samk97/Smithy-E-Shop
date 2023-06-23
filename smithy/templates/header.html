@@ -67,14 +67,16 @@
                     <a class="dropdown-item " href="#"><span>My Profile</span></a>
                     <a class="dropdown-item " href="#"><span>Orders</span> </a>
                     <hr class="dropdown-divider">
-                    <a class="dropdown-item " href="#"><span>Logout</span> </a>
+                    <a class="dropdown-item " href="{% url 'logout' %}"><span>Logout</span> </a>
                 </div>
                     {% comment %} <a class="dropdown-item " href="{% url 'shop:logout'%}"><span>Logout</span></a> {% endcomment %}
                     {%else%}
                     
-                    <a   data-bs-toggle="modal" data-bs-target="#Login_page">
+                    {% comment %} <a   data-bs-toggle="modal" data-bs-target="#Login_page">
                         login
-                    </a>
+                    </a> {% endcomment %}
+
+                    <a class="dropdown-item " href="{% url 'login' %}"><span>Login</span> </a>
                     {%endif%}
                 
                 
@@ -86,7 +88,7 @@
            <!-- Button trigger modal -->
     
 
-    <div class="login_form modal fade" id="Login_page">
+    {% comment %} <div class="login_form modal fade" id="Login_page">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -134,10 +136,10 @@
 
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 
         <!-- Sign Up -->
-        <div class="login_form modal fade" id="Signup_page">
+        {% comment %} <div class="login_form modal fade" id="Signup_page">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -145,7 +147,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        {% comment %} <div class="container"> {% endcomment %}
                             <form action="#" model="POST">
                                 {% csrf_token %}
                                 <div class="input-field">
@@ -179,13 +180,12 @@
                                 </div>
 
                             </form>
-                            
-                        {% comment %} </div> {% endcomment %}
+                         
                     </div>
     
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
 
 
     </header>
