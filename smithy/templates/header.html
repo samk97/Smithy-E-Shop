@@ -13,10 +13,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
-    <link rel="stylesheet" href="{% static 'css/cart.css'%}">
-
+    {% comment %} <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"/> {% endcomment %}
+    
 </head>
 
 <body>
@@ -28,10 +27,17 @@
         <div class="header-1">
 
             <a  class="logo "><i class='fas fa-hammer' style='font-size:36px'></i>Smithy</a>
-            <form action="" class="search-box-container">
+            {% comment %} <div id="autocomplete" class="autocomplete">
+                <input class="autocomplete-input" />
+                <ul class="autocomplete-result-list"></ul>
+            </div> {% endcomment %}
+              
+            <div action="" class="search-box-container">
                 <input type="search" id="search-box" placeholder="search here...">
                 <label for="search-box" class="fas fa-search"></label>
-            </form>
+            </div>
+              
+            
         </div>
 
         <div class="header-2">
@@ -41,15 +47,15 @@
             <ul class="navbar" style="list-style-type:none;">
 
                 {%url 'home' as url %}
-                <li class="{% if request.path == url %} active {% endif %}"><a  href="{{url}}">home</a></li>
+                <li class="{% if request.path == url %} active {% endif %}"><a  href="{{url}}">Home</a></li>
                 {%url 'tools' as url %}
-                <li class="{% if request.path == url %} active {% endif %}"><a href="{{url}}">tools</a></li>
-                <li><a href="#contact">Agriculture</a></li>
-                <li><a href="#contact">Weapones</a></li>
-                <li><a href="#contact">Utensils</a></li>
-                {% comment %} <a href="#category">category</a>
-                <a href="#product">product</a>
-                <a href="#contact">contact</a> {% endcomment %}
+                <li class="{% if request.path == url %} active {% endif %}"><a href="{{url}}">Tools</a></li>
+                {%url 'agriculture' as url %}
+                <li class="{% if request.path == url %} active {% endif %}"><a href="{{url}}">Agriculture</a></li>
+                {%url 'weapones' as url %}
+                <li class="{% if request.path == url %} active {% endif %}"><a href="{{url}}">Weapones</a></li>
+                {%url 'utensils' as url %}
+                <li class="{% if request.path == url %} active {% endif %}"><a href="{{url}}">Utensils</a></li>
             </ul>
 
             <div class="icons">
@@ -84,122 +90,40 @@
             </div>
 
         </div>
-        {% comment %} <--! loginpage--> {% endcomment %}
-           <!-- Button trigger modal -->
-    
-
-    {% comment %} <div class="login_form modal fade" id="Login_page">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                        <form action="#">
-                            <div class="input-field">
-                                <input type="text" name="" id="" placeholder="Enter your email" required>
-                                <i class="uil uil-envelope"></i>
-                            </div>
-                            <div class="input-field">
-                                <input type="password" name="" id="" placeholder="Enter your password" required>
-                                <i class="uil uil-lock icon"></i>
-                                <i class="uil uil-eye-slash showHidenPw"></i>
-                            </div>
-
-                            <div class="checkbox-text">
-                                <div class="checkbox-content">
-                                    <input type="checkbox" id="logCheck">
-                                    <label for="logCheck" class="text">Remember me</label>
-                                </div>
-                                <div>
-
-                                    <a href="#" class="text">Forgot password?</a>
-                                </div>
-                            </div>
-
-                            <div class="input-field button">
-                                <input type="submit" value="Login Now">
-                            </div>
-
-                            <div class="login-signup">
-                                <span class="text">Don't have an account
-                                    ?
-                                    <a  data-bs-toggle=" modal" data-bs-target="#Signup_page">Signup now</a>
-                                </span>
-                            </div>
-                            
-                        </form>
-                        
-
-                </div>
-
-            </div>
-        </div>
-    </div> {% endcomment %}
-
-        <!-- Sign Up -->
-        {% comment %} <div class="login_form modal fade" id="Signup_page">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Registration</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                            <form action="#" model="POST">
-                                {% csrf_token %}
-                                <div class="input-field">
-                                    <input type="text" name="username" id="" placeholder="User Name" required>
-                                    <i class="fa-regular fa-circle-user"></i>
-                                </div>
-                                <div class="input-field">
-                                    <input type="mail" name="email" id="" placeholder="Enter your email" required>
-                                    <i class="uil uil-envelope"></i>
-                                </div>
-                                <div class="input-field">
-                                    <input type="password" name="passWord1" class="password" placeholder="Create a password" required>
-                                    <i class="uil uil-lock icon"></i>
-                                </div>
-                                <div class="input-field">
-                                    <input type="password" name="password2" class="password" placeholder="Confirm a password" required>
-                                    <i class="uil uil-lock icon"></i>
-                                    <i class="uil uil-eye-slash showHidenPw"></i>
-                                </div>
-            
-                               
-            
-                                <div class="input-field button">
-                                    <input type="submit" value="Register Now">
-                                </div>
-
-                                <div class="login-signup" >
-                                    <span class="text">Already have an account?
-                                        <a  data-bs-toggle="modal" data-bs-target="#Login_page">Login now</a>
-                                    </span>
-                                </div>
-
-                            </form>
-                         
-                    </div>
-    
-                </div>
-            </div>
-        </div> {% endcomment %}
-
+        
 
     </header>
 
-    {% block content %}
-
-    {% endblock %}
+    
 
 
 
 
     <!-- custom js file link  -->
-    <script src="script.js"></script>
+    {% comment %} <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <script >
+        new Autocomplete('#autocomplete', {
+            search : input => {
+                if (console) console.log(input)
+                const url = `/get_name/?search=${input}`
+                return new Promise(resolve => {
+                    fetch(url)
+                    .then(response =>response.json())
+                    .then(data => {
+                        if (console) console.log(data)
+                        resolve(data.payload)
+                    })
 
+                })
+            }
+            
+        })
+        
+    </script> {% endcomment %}
+
+    {% block content %}
+
+    {% endblock %}
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.shortcuts import render,redirect
 from service.models import service
 from django.contrib.auth.models import User
@@ -6,9 +6,11 @@ from django.contrib.auth import authenticate,login,logout
  
 
 def homePage(request):
-    # if request.method=="GET":
-    #     output=request.GET.get('email')
-    return render(request,"index.html")
+    serviceData=service.objects.all().order_by('price')
+    data={
+        'serviceData':serviceData
+    }
+    return render(request,"index.html",data)
 
 def tools(request):
     serviceData=service.objects.all().order_by('price')
@@ -16,6 +18,33 @@ def tools(request):
         'serviceData':serviceData
     }
     return render(request,"tools.html",data)
+
+
+def agriculture(request):
+    serviceData=service.objects.all().order_by('price')
+    data={
+        'serviceData':serviceData
+    }
+    return render(request,"agriculture.html",data)
+
+
+def utensils(request):
+    serviceData=service.objects.all().order_by('price')
+    data={
+        'serviceData':serviceData
+    }
+    return render(request,"utensils.html",data)
+
+
+
+def weapones(request):
+    serviceData=service.objects.all().order_by('price')
+    data={
+        'serviceData':serviceData
+    }
+    return render(request,"weapones.html",data)
+
+
 
  
 
@@ -55,3 +84,19 @@ def signup_page(request):
 def logout_page(request):
     logout(request)
     return redirect('home')
+
+
+def get_name(request):
+    search=request.GET.get('search')
+    payload=[]
+    if search:
+        objs=service.objects.filter(name__icontains=search)
+        for obj in objs:
+            payload.append({
+                'name':obj.name
+            })
+    return JsonResponse({
+        'status' : True ,
+        'payload' : payload
+
+    })

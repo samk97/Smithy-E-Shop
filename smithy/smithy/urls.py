@@ -20,8 +20,13 @@ from smithy import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.homePage,name='home'),
-    path('tools/',views.tools,name='tools'),
     path('login/',views.login_page,name='login'),
     path('signup/',views.signup_page,name='signup'),
     path('logout/',views.logout_page,name='logout'),
+    path('get-name/',views.get_name,name='get-name'),
+
+    path('tools/',views.tools,name='tools'),
+    path('weapones/',views.weapones,name='weapones'),
+    path('agriculture/',views.agriculture,name='agriculture'),
+    path('utensils/',views.utensils,name='utensils'),
 ]
