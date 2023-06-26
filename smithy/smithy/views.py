@@ -1,16 +1,23 @@
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.shortcuts import render,redirect
 from service.models import service
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, auth,Group
 from django.contrib.auth import authenticate,login,logout
- 
+from .decorates import unauthenticated_user,allowed_user, admin_only
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='login')
 def homePage(request):
     serviceData=service.objects.all().order_by('price')
     data={
         'serviceData':serviceData
     }
     return render(request,"index.html",data)
+
+@login_required(login_url='login')
+@admin_only
+def admin(request):
+    return render(request,"admin_page.html")
 
 def tools(request):
     serviceData=service.objects.all().order_by('price')
@@ -44,10 +51,27 @@ def weapones(request):
     }
     return render(request,"weapones.html",data)
 
+def cart(request):
+    
+    return render(request,"cart.html")
 
 
- 
 
+def product_details(request,product_id):
+    print(product_id)
+    product_details=service.objects.get(id=product_id)
+    data={
+        'product_details':product_details
+    }
+    return render(request,"product_details.html",data)
+
+
+
+
+
+
+# @allowed_user
+@unauthenticated_user
 def login_page(request):
     user_name=''
     if request.method == "POST":
@@ -63,6 +87,7 @@ def login_page(request):
     return render(request, "login_page.html",{'uname':user_name})
 
 
+@unauthenticated_user
 def signup_page(request):
     x=""
     if request.method == "POST":

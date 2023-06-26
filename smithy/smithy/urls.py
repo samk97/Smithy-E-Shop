@@ -19,6 +19,7 @@ from smithy import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin-page/',views.admin, name='admin-page'),
     path('',views.homePage,name='home'),
     path('login/',views.login_page,name='login'),
     path('signup/',views.signup_page,name='signup'),
@@ -29,4 +30,6 @@ urlpatterns = [
     path('weapones/',views.weapones,name='weapones'),
     path('agriculture/',views.agriculture,name='agriculture'),
     path('utensils/',views.utensils,name='utensils'),
+    path('cart/',views.cart,name='cart'),
+    path('product-details/<product_id>',views.product_details,name='product_details'),
 ]
