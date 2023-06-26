@@ -86,21 +86,21 @@
 
     <div class="box-container">
 
-        {% for n in serviceData %}
-            <div class="box">
-                <span class="discount">-{{n.discount}}%</span>
+        {% for n in productData %}
+        <div class="box">
+            {% if n.discount > 0 %}
+            <span class="discount">-{{n.discount}}%</span>
+            {% endif %}
+            <img src="/{{n.product_image}}" alt="">
+            <h3>{{n.name}}</h3>
 
-                <img src="/{{n.image}}" alt="">
-                <h3>{{n.name}}</h3>
-
-                <div class="price"> Rs To be calculate <span> Rs {{n.price}} </span> </div>
-                <div class="quantity">
-                    <span>quantity : </span>
-                    <input type="number" min="1" max="1000" value="1">
-
-                </div>
-                <a href="{% url 'product_details' n.id %}" class="btn">Order Now</a>
+            <div class="price">Rs {{n.discounted_price}}  
+                {% if n.discount > 0 %}
+                <span> Rs {{n.price}} </span> 
+                {% endif %}
             </div>
+            <a href="{% url 'product_details' n.id %}" class="btn">Order Now</a>
+        </div>
         {% endfor %}
         
 

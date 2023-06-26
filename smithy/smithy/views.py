@@ -1,6 +1,6 @@
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.shortcuts import render,redirect
-from service.models import service
+from product.models import Product
 from django.contrib.auth.models import User, auth,Group
 from django.contrib.auth import authenticate,login,logout
 from .decorates import unauthenticated_user,allowed_user, admin_only
@@ -8,9 +8,9 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='login')
 def homePage(request):
-    serviceData=service.objects.all().order_by('price')
+    productData=Product.objects.all().order_by('price')
     data={
-        'serviceData':serviceData
+        'productData':productData
     }
     return render(request,"index.html",data)
 
@@ -20,34 +20,34 @@ def admin(request):
     return render(request,"admin_page.html")
 
 def tools(request):
-    serviceData=service.objects.all().order_by('price')
+    productData=Product.objects.all().order_by('price')
     data={
-        'serviceData':serviceData
+        'productData':productData
     }
     return render(request,"tools.html",data)
 
 
 def agriculture(request):
-    serviceData=service.objects.all().order_by('price')
+    productData=Product.objects.all().order_by('price')
     data={
-        'serviceData':serviceData
+        'productData':productData
     }
     return render(request,"agriculture.html",data)
 
 
 def utensils(request):
-    serviceData=service.objects.all().order_by('price')
+    productData=Product.objects.all().order_by('price')
     data={
-        'serviceData':serviceData
+        'productData':productData
     }
     return render(request,"utensils.html",data)
 
 
 
 def weapones(request):
-    serviceData=service.objects.all().order_by('price')
+    productData=Product.objects.all().order_by('price')
     data={
-        'serviceData':serviceData
+        'productData':productData
     }
     return render(request,"weapones.html",data)
 
@@ -59,7 +59,7 @@ def cart(request):
 
 def product_details(request,product_id):
     print(product_id)
-    product_details=service.objects.get(id=product_id)
+    product_details=Product.objects.get(id=product_id)
     data={
         'product_details':product_details
     }
@@ -115,7 +115,7 @@ def get_name(request):
     search=request.GET.get('search')
     payload=[]
     if search:
-        objs=service.objects.filter(name__icontains=search)
+        objs=Product.objects.filter(name__icontains=search)
         for obj in objs:
             payload.append({
                 'name':obj.name

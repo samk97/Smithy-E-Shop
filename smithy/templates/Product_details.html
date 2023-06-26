@@ -6,16 +6,19 @@
  <section class="product">
     <div class="box-container container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0" src="/{{product_details.image}}" alt="..." /></div>
+            <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0" src="/{{product_details.product_image}}" alt="..." /></div>
             <div class="col-md-8">
+                {% if product_details.discount > 0 %}
                 <span class="discount">-{{product_details.discount}}%</span>
+                {% endif %}
                 <h1 class="display-1 fw-bolder">{{product_details.name}}</h1>
                 <div class="fs-5 mb-5">
-                    <span class="text-decoration-line-through">₹ -----</span>
-                    <span>₹{{product_details.price}}</span>
+                    {% if product_details.discount > 0 %}
+                    <span class="text-decoration-line-through">₹ {{product_details.price}}</span>
+                    {% endif %}
+                    <span>₹{{product_details.discounted_price}}</span>
                 </div>
-                <p class="display-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
-                <div class="d-flex">
+                <p class="display-6">{{product_details.description | safe}}<div class="d-flex">
                      <button class="btn" type="button">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
