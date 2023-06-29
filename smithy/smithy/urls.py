@@ -30,6 +30,11 @@ urlpatterns = [
     path('weapones/',views.weapones,name='weapones'),
     path('agriculture/',views.agriculture,name='agriculture'),
     path('utensils/',views.utensils,name='utensils'),
-    path('cart/',views.cart,name='cart'),
+    
     path('product-details/<product_id>',views.product_details,name='product_details'),
+    path('add-to-cart/',views.add_to_cart,name='add-to-cart'),
+    path('cart/',views.show_cart,name='showcart'),
+    path('delete-from-cart/',views.delete_from_cart,name='delete-from-cart'),
+
+    path('payment', views.payment, name="payment"),
 ]

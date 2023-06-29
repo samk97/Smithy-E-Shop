@@ -9,6 +9,7 @@
     <div class="box-container">
 
         {% for n in productData %}
+        {% if n.category == "A" %}
         <div class="box">
             {% if n.discount > 0 %}
             <span class="discount">-{{n.discount}}%</span>
@@ -23,6 +24,7 @@
             </div>
             <a href="{% url 'product_details' n.id %}" class="btn">Order Now</a>
         </div>
+        {% endif %}
         {% endfor %}
         
 

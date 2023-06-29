@@ -19,10 +19,19 @@
                     <span>₹{{product_details.discounted_price}}</span>
                 </div>
                 <p class="display-6">{{product_details.description | safe}}<div class="d-flex">
-                     <button class="btn" type="button">
-                        <i class="bi-cart-fill me-1"></i>
-                        Add to cart
-                    </button>
+                    <div class="d-flex">
+                        <form action="/add-to-cart">
+                          <input
+                            type="hidden"
+                            name="product_id"
+                            value="{{product_details.id}}"
+                          />
+                          <button class="btn" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                          </button>
+                        </form>
+                      </div>
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ from django.contrib.auth.models import User, auth,Group
 from django.contrib.auth import authenticate,login,logout
 from .decorates import unauthenticated_user,allowed_user, admin_only
 from django.contrib.auth.decorators import login_required
+from cart.models import Cart
+from django.contrib import messages
 
 @login_required(login_url='login')
 def homePage(request):
@@ -65,6 +67,36 @@ def product_details(request,product_id):
     }
     return render(request,"product_details.html",data)
 
+
+def add_to_cart(request): 
+    user=request.user 
+    product_id=request.GET.get('product_id')
+    product = Product.objects.get(id=product_id)
+    Cart(user=user,product=product).save()
+    return redirect('/cart')
+
+def show_cart(request):
+    user=request.user 
+    cart= Cart.objects.filter(user=user)
+    amount = 0
+    shiping_amount = 40
+    l= len(cart)
+    for p in cart:
+        value = p.quantity * p.product.discounted_price
+        amount = amount + value
+    totalamount = amount + shiping_amount
+    return render(request,'cart.html',locals())
+
+
+def delete_from_cart(request):
+   product_id=request.GET.get('product_id')
+   Cart.objects.filter(id=product_id).delete()
+   messages.success(request,"Your item deleted from cart !!")
+   return HttpResponseRedirect('/cart')
+
+@login_required(login_url='shop:login')
+def payment(request):
+    return render(request, 'payment_page.html')
 
 
 
