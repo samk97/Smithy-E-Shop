@@ -1,5 +1,5 @@
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from product.models import Product
 from django.contrib.auth.models import User, auth,Group
 from django.contrib.auth import authenticate,login,logout
@@ -20,7 +20,7 @@ def homePage(request):
 @admin_only
 def admin(request):
     return render(request,"admin_page.html")
-
+@login_required(login_url='login')
 def tools(request):
     productData=Product.objects.all().order_by('price')
     data={
@@ -28,7 +28,7 @@ def tools(request):
     }
     return render(request,"tools.html",data)
 
-
+@login_required(login_url='login')
 def agriculture(request):
     productData=Product.objects.all().order_by('price')
     data={
@@ -36,7 +36,7 @@ def agriculture(request):
     }
     return render(request,"agriculture.html",data)
 
-
+@login_required(login_url='login')
 def utensils(request):
     productData=Product.objects.all().order_by('price')
     data={
@@ -45,7 +45,7 @@ def utensils(request):
     return render(request,"utensils.html",data)
 
 
-
+@login_required(login_url='login')
 def weapones(request):
     productData=Product.objects.all().order_by('price')
     data={
@@ -53,28 +53,39 @@ def weapones(request):
     }
     return render(request,"weapones.html",data)
 
+
+@login_required(login_url='login')
 def cart(request):
     
     return render(request,"cart.html")
 
 
+@login_required(login_url='login')
+def product_details(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    similar_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:4]
 
-def product_details(request,product_id):
-    print(product_id)
-    product_details=Product.objects.get(id=product_id)
-    data={
-        'product_details':product_details
+    context = {
+        'product_details': product,
+        'similar_products': similar_products,
     }
-    return render(request,"product_details.html",data)
+
+    return render(request, 'product_details.html', context)
 
 
+
+@login_required(login_url='login')
 def add_to_cart(request): 
     user=request.user 
     product_id=request.GET.get('product_id')
-    product = Product.objects.get(id=product_id)
+    product = get_object_or_404(Product, id=product_id)
+    if Cart.objects.filter(user=user, product=product).exists():
+        return redirect('/cart')
     Cart(user=user,product=product).save()
     return redirect('/cart')
 
+
+@login_required(login_url='login')
 def show_cart(request):
     user=request.user 
     cart= Cart.objects.filter(user=user)
@@ -88,11 +99,29 @@ def show_cart(request):
     return render(request,'cart.html',locals())
 
 
+
+@login_required(login_url='login')
 def delete_from_cart(request):
    product_id=request.GET.get('product_id')
    Cart.objects.filter(id=product_id).delete()
    messages.success(request,"Your item deleted from cart !!")
    return HttpResponseRedirect('/cart')
+
+
+def increase_quantity(request, item_id):
+    cart_item = get_object_or_404(Cart, id=item_id)
+    cart_item.quantity += 1
+    cart_item.save()
+
+    return redirect('/cart')  
+def decrease_quantity(request, item_id):
+    cart_item = get_object_or_404(Cart, id=item_id)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+
+    return redirect('/cart')
+
 
 @login_required(login_url='shop:login')
 def payment(request):

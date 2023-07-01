@@ -86,7 +86,7 @@ html {
 
 .overflow-scroll,.row {
   padding: 2rem;
-  /* border: solid .1rem #27ae60; */
+  border: solid .1rem #27ae60;
 }
 
 .delete_btn {
