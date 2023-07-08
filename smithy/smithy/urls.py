@@ -14,29 +14,31 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from smithy import views
 
 urlpatterns = [
+    path('', include('seller.urls')),
     path('admin/', admin.site.urls),
-    path('admin-page/',views.admin, name='admin-page'),
-    path('',views.homePage,name='home'),
-    path('login/',views.login_page,name='login'),
-    path('signup/',views.signup_page,name='signup'),
-    path('logout/',views.logout_page,name='logout'),
-    path('get-name/',views.get_name,name='get-name'),
+    path('', views.homePage, name='home'),
+    path('login/', views.login_page, name='login'),
+    path('signup/', views.signup_page, name='signup'),
+    path('logout/', views.logout_page, name='logout'),
+    path('get-name/', views.get_name, name='get-name'),
 
-    path('tools/',views.tools,name='tools'),
-    path('weapones/',views.weapones,name='weapones'),
-    path('agriculture/',views.agriculture,name='agriculture'),
-    path('utensils/',views.utensils,name='utensils'),
-    
-    path('product-details/<product_id>',views.product_details,name='product_details'),
-    path('add-to-cart/',views.add_to_cart,name='add-to-cart'),
-    path('cart/',views.show_cart,name='showcart'),
-    path('delete-from-cart/',views.delete_from_cart,name='delete-from-cart'),
-    path('increase_quantity/<int:item_id>/', views.increase_quantity, name='increase_quantity'),
-    path('decrease_quantity/<int:item_id>/', views.decrease_quantity, name='decrease_quantity'),
+    path('tools/', views.tools, name='tools'),
+    path('weapones/', views.weapones, name='weapones'),
+    path('agriculture/', views.agriculture, name='agriculture'),
+    path('utensils/', views.utensils, name='utensils'),
 
+    path('product-details/<product_id>',
+         views.product_details, name='product_details'),
+    path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
+    path('cart/', views.show_cart, name='showcart'),
+    path('delete-from-cart/', views.delete_from_cart, name='delete-from-cart'),
+    path('increase_quantity/<int:item_id>/',
+         views.increase_quantity, name='increase_quantity'),
+    path('decrease_quantity/<int:item_id>/',
+         views.decrease_quantity, name='decrease_quantity'),
     path('payment', views.payment, name="payment"),
 ]

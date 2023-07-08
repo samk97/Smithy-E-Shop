@@ -2,13 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-CATEGORY_CHOICES = (
-    ('T', 'Tools'),
-    ('A', 'Agriculture'),
-    ('W', 'Weapones'),
-    ('U', 'Utensils'),
-
-)
 
 
 class Product(models.Model):
@@ -17,8 +10,11 @@ class Product(models.Model):
     discount = models.IntegerField(default=0)
     discounted_price = models.FloatField(default=0)
     description = models.TextField(blank= True, null=True, unique = True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=1)
+    category = models.CharField(max_length=100)
     product_image = models.ImageField(upload_to='static/image/')
+    quantity=models.IntegerField(default=1)
+    seller = models.CharField(max_length=100)
+    seller_email = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name

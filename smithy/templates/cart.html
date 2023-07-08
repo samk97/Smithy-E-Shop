@@ -38,7 +38,7 @@
                   style="display: inline"
                 >
                   {% csrf_token %}
-                  <button  type="submit"><i class="delete_btn fa fa-minus" style="font-size: 30px; background: white"></i></button>
+                  <button  type="submit" style=" background: white"><i class="delete_btn fa fa-minus" style="font-size: 20px; background: white"></i></button>
                 </form>
                 <input type="number" style="width:50px" value="{{item.quantity}}" />
                 <form
@@ -47,7 +47,7 @@
                   style="display: inline"
                 >
                   {% csrf_token %}
-                  <button type="submit"><i class="delete_btn fa fa-plus" style="font-size: 30px; background: white"></i></button>
+                  <button type="submit" style=" background: white"><i class="delete_btn fa fa-plus" style="font-size: 20px; background: white"></i></button>
                 </form>
               </div>
 
@@ -58,8 +58,8 @@
               </div>
               <form action="/delete-from-cart">
                 <input type="hidden" name="product_id" value="{{item.id}}" />
-                <button type="submit">
-                  <i class="delete_btn fa fa-trash" style="font-size: 30px; background: white"></i>
+                <button type="submit" style=" background: white">
+                  <i class="delete_btn fa fa-trash" ></i>
                 </button>
               </form>
             </div>

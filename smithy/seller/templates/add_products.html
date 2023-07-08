@@ -1,0 +1,102 @@
+{% extends 'seller_base.html' %} {% load static %} {% block content %}
+
+<section>
+  <div class="heading">
+    Product
+    <span class="title">details</span>
+  </div>
+  <div class="row">
+    <div class="login_form" id="Signup_page">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form action="#" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="overflow-scroll" style="max-height: 400px">
+
+                
+                <div class="input-field">
+                  <input
+                    type="text"
+                    name="pname"
+                    id=""
+                    placeholder="Name"
+                    required
+                  />
+                </div>
+                <div class="input-field">
+                  <input
+                    type="number"
+                    name="pprice"
+                    id=""
+                    placeholder="Price Of Product"
+                    required
+                  />
+                </div>
+                <div class="input-field">
+                  <input
+                    type="number"
+                    name="pquantity"
+                    placeholder="quantity"
+                    required
+                  />
+                </div>
+                <div class="input-field">
+                  <input
+                    type="number"
+                    name="pdiscount"
+                    placeholder="Discount Percentage"
+                    required
+                  />
+                </div>
+
+                <div class="input-field">
+                  <input
+                    list="browsers"
+                    name="pcategory"
+                    id="browser"
+                    placeholder="Product Category"
+                    required
+                  />
+                  <datalist id="browsers">
+                    <option value="Tools"></option>
+                    <option value="Agriculture"></option>
+                    <option value="Weapones"></option>
+                    <option value="Utensils"></option>
+                  </datalist>
+                </div>
+
+                <div class="input-field">
+                  <input
+                    type="file"
+                    id="img"
+                    name="pimg"
+                    accept="image/*"
+                    required
+                  />
+                </div>
+                <label for="exampleFormControlFile1">Choose Image</label>
+
+                <div class="input-field">
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                    placeholder="Product Discription"
+                    name="pdescription"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="input-field">
+                <button class="btn" type="submit">Add Product</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
