@@ -1,33 +1,55 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from product.models import Product
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from smithy.decorates import unauthenticated_user, admin_only
 
 # Create your views here.
 
+
+@admin_only
+@login_required(login_url='login')
 def dashboard(request):
-    return render(request,'dashboard.html')
+    return render(request, 'dashboard.html')
 
 
+@admin_only
+@login_required(login_url='login')
 def products(request):
     productData = Product.objects.all()
     data = {
         'productData': productData
     }
-    return render(request,'products.html',data)
+    return render(request, 'products.html', data)
 
+
+@admin_only
+@login_required(login_url='login')
 def performance(request):
-    return render(request,'performance.html')
+    return render(request, 'performance.html')
 
+
+@admin_only
+@login_required(login_url='login')
 def seller_orders(request):
-    return render(request,'orders.html')
+    return render(request, 'orders.html')
 
+
+@admin_only
+@login_required(login_url='login')
 def seller_profile(request):
-    return render(request,'profile.html')
+    return render(request, 'profile.html')
 
+
+@admin_only
+@login_required(login_url='login')
 def help_center(request):
-    return render(request,'help_center.html')
+    return render(request, 'help_center.html')
 
+
+@admin_only
+@login_required(login_url='login')
 def seller_delete(request):
     product_id = request.GET.get('product_id')
     Product.objects.filter(id=product_id).delete()
@@ -35,8 +57,12 @@ def seller_delete(request):
     return redirect('/products')
 
 
+@admin_only
+@login_required(login_url='login')
 def add_products(request):
-    
+    current_user = request.user.username
+    current_user_email = request.user.email
+
     if request.method == "POST":
         name = request.POST.get('pname')
         price = request.POST.get('pprice')
@@ -44,11 +70,7 @@ def add_products(request):
         category = request.POST.get('pcategory')
         quantity = request.POST.get('pquantity')
         image_file = request.FILES.get('pimg')
-        # image_instance = 'na'
-        # if 'image_file' in request.FILES:
-        #     image_instance = Product(product_image = image_file)
         description = request.POST.get('pdescription')
-        # print(name,price,discount,quantity,image_instance,description)
         new_product = Product.objects.create(
             name=name,
             price=price,
@@ -56,7 +78,18 @@ def add_products(request):
             quantity=quantity,
             category=category,
             product_image=image_file,
-            description=description
+            description=description,
+            seller=current_user,
+            seller_email=current_user_email
         )
         new_product.save()
+        return redirect('/products')
     return render(request, "add_products.html")
+
+
+def orders(request):
+    productData = Product.objects.all()
+    data = {
+        'productData': productData
+    }
+    return render(request, 'orders.html', data)

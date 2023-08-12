@@ -1,10 +1,18 @@
 {% extends 'seller_base.html' %} {% load static %} {% block content %}
 
-<section>
-  <div class="heading">
-    Product
-    <span class="title">details</span>
+<div class="top_navbar">
+  <div class="col-auto hamburger">
+    <a href="#">
+      <i class="fas fa-bars"></i>
+    </a>
   </div>
+  <div class="col text-center">
+    <h1>Add New <span class="text-success">Product</span></h1>
+  </div>
+</div>
+
+<section>
+ 
   <div class="row">
     <div class="login_form" id="Signup_page">
       <div class="modal-dialog">
@@ -12,7 +20,7 @@
           <div class="modal-body">
             <form action="#" method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              <div class="overflow-scroll" style="max-height: 400px">
+              <div class="overflow-scroll" style="max-height: 450px">
 
                 
                 <div class="input-field">
@@ -88,7 +96,7 @@
                 </div>
               </div>
 
-              <div class="input-field">
+              <div class="heading">
                 <button class="btn" type="submit">Add Product</button>
               </div>
             </form>

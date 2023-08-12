@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from product.models import Product
 from django.contrib.auth.models import User, auth, Group
 from django.contrib.auth import authenticate, login, logout
-from .decorates import unauthenticated_user, allowed_user, admin_only
+from .decorates import unauthenticated_user, admin_only
 from django.contrib.auth.decorators import login_required
 from cart.models import Cart
 from django.contrib import messages
@@ -18,10 +18,7 @@ def homePage(request):
     return render(request, "index.html", data)
 
 
-@login_required(login_url='login')
-# @admin_only
-# def admin(request):
-#     return render(request,"seller.html")
+
 @login_required(login_url='login')
 def tools(request):
     productData = Product.objects.all().order_by('price')
@@ -133,7 +130,7 @@ def payment(request):
     return render(request, 'payment_page.html')
 
 
-# @allowed_user
+
 @unauthenticated_user
 def login_page(request):
     user_name = ''
@@ -143,6 +140,12 @@ def login_page(request):
         user = authenticate(request, username=username, password=pass1)
         if user is not None:
             login(request, user)
+            
+            # Check if the user is a superuser
+            if user.is_superuser:
+                return redirect('seller:dashboard')
+
+            # If not a superuser, redirect to user-specific page
             return redirect('home')
         else:
             return HttpResponse("Invalid input")

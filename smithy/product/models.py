@@ -13,8 +13,8 @@ class Product(models.Model):
     category = models.CharField(max_length=100)
     product_image = models.ImageField(upload_to='static/image/')
     quantity=models.IntegerField(default=1)
-    seller = models.CharField(max_length=100)
-    seller_email = models.CharField(max_length=100)
+    seller = models.CharField(default='NA',max_length=100)
+    seller_email = models.CharField(default='NA',max_length=100)
 
     def __str__(self):
         return self.name
